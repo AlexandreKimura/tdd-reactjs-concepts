@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 
-const useCounter = () => {
-  const [count, setCount] = useState(0);
+const useCounter = (initialValue = 0) => {
+  const [count, setCount] = useState(initialValue);
   const increment = useCallback(() => setCount((x) => x + 1), []);
 
   return { count, increment };
