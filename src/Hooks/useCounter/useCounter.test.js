@@ -36,16 +36,40 @@ import useCounter, { CounterStepProvider } from "./useCounter";
 //   expect(result.current.count).toBe(10);
 // });
 
-test("Should use custom step when incrementing", () => {
-  const wrapper = ({ children }) => (
-    <CounterStepProvider step={2}>{children}</CounterStepProvider>
-  );
+// test("Should use custom step when incrementing", () => {
+//   const wrapper = ({ children, step }) => (
+//     <CounterStepProvider step={step}>{children}</CounterStepProvider>
+//   );
 
-  const { result } = renderHook(() => useCounter(), { wrapper });
+//   const { result, rerender } = renderHook(() => useCounter(), {
+//     wrapper,
+//     initialProps: {
+//       step: 2,
+//     },
+//   });
 
-  act(() => {
-    result.current.increment();
-  });
+//   act(() => {
+//     result.current.increment();
+//   });
 
-  expect(result.current.count).toBe(2);
+//   expect(result.current.count).toBe(2);
+
+//   //Change the step value
+//   rerender({ step: 8 });
+
+//   act(() => {
+//     result.current.increment();
+//   });
+
+//   expect(result.current.count).toBe(10);
+// });
+
+test("Testing async increment", async () => {
+  const { result, waitForNextUpdate } = renderHook(() => useCounter());
+
+  result.current.incrementAsync();
+
+  await waitForNextUpdate();
+
+  expect(result.current.count).toBe(1);
 });
